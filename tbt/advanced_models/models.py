@@ -1,7 +1,8 @@
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.db.models import Q
+from django.db.models import Q , F
+from django.db.models import Avg ,Sum
 
 
 #Abstract base classes
@@ -88,6 +89,12 @@ Custom methods: Adds functionality beyond CRUD operations and are not bound to a
 #A query in the context of databases refers to a request for data from a database.
 #Examples: .all(), .filter(), .get()
 
+#about Queries and Querysets
+#I had a problem understanding em
+# But now it's ok let me explain to have a better understanding of it
+#Query is a request for data to a database
+#when querysets is just bunch of data from database that matches a conditions in a specific query(request)
+
 #Q Objects
 #They allow to get query with multiple conditions
 
@@ -111,3 +118,47 @@ for product in products:
 
 #Here is example with F Expression(nice short and effective :) )
 '''Product.objects.update(price=F('price') * 1.1)'''
+
+
+#Aggregation and Annotation
+#Aggregation math operation with fields
+# Sum(): Computes the sum of the values.
+# Avg(): Computes the average of the values.
+# Count(): Counts the number of values.
+# Min(): Finds the minimum value.
+# Max(): Finds the maximum value.
+average_price = Product.objects.aggregate(Avg('price'))
+
+
+#Annotation
+#adds calculated values to each item in a queryset
+products = Product.objects.annotate(discounted_price=F('price') * 0.9)
+for product in products:
+    print(f"{product.name}: {product.discounted_price}")
+
+
+#Combine them
+# Annotate each product with total sales
+# Calculate the average total sales
+products_with_sales = Product.objects.annotate(total_sale=Sum('order__quantity'))
+average_total_sales = products_with_sales.aggregate(Avg('total_sales'))
+print(average_total_sales) 
+
+#Model Manager
+#It's a model to manage another models.
+#As i understand most of the time it contains some filter methods for later creation of a queryset
+#or some optimization methods for example to call for Books and related Authors in one query and not
+# two different queries.
+
+class BookManager(models.Manager):
+    def bestsellers(self):
+        return self.filter(is_bestseller=True)
+    
+    
+#later in view:
+'''
+def bestsellers_view(request):
+    bestsellers = Book.objects.bestsellers()
+    return render(request, 'bestsellers.html', {'bestsellers': bestsellers})
+'''
+
