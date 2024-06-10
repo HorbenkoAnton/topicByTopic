@@ -162,3 +162,7 @@ def bestsellers_view(request):
     return render(request, 'bestsellers.html', {'bestsellers': bestsellers})
 '''
 
+#ORM I don't really know where to place this
+#ORM is a technique ,I'd rather said that it's a way to write code
+#That allows devs to map throw all objects in app and place em to database well orginised organized
+#ORM is also strognly depends on OOP principles 
