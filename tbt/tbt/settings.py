@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'advanced_models',
+    'forms_and_formsets'
 
 ]
 
