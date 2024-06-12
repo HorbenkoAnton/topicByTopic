@@ -1,5 +1,5 @@
 from django import forms
-from .models import NewMessage  
+from .models import NewMessage,UserProfile  
 
 class ContactForm(forms.Form):
     name = forms.CharField(max_length=100)
@@ -13,3 +13,9 @@ class NewMessageForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea
         }
+
+        
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['username', 'email', 'first_name', 'last_name', 'age','bio']

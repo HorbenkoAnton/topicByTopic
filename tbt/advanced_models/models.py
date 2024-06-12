@@ -3,7 +3,7 @@
 # from django.dispatch import receiver
 # from django.db.models import Q , F
 # from django.db.models import Avg ,Sum
-
+# from django.contrib.auth.models import BaseUserManager
 
 # #Abstract base classes
 # #I think this is good example of usage of Abstract base classes
@@ -166,3 +166,70 @@
 # #ORM is a technique ,I'd rather said that it's a way to write code
 # #That allows devs to map throw all objects in app and place em to database well orginised organized
 # #ORM is also strognly depends on OOP principles 
+
+# #abstact user
+# #Class used to create a custom user models
+# from django.contrib.auth.models import AbstractUser
+# from django.db import models
+
+# class CustomUser(AbstractUser):
+#     age = models.IntegerField(blank=True, null=True)
+#     #u can set parametrs with this two:
+#     USERNAME_FIELD = 'email'
+#     REQUIRED_FIELDS = []
+#     #if we changing username field we need to override get_username() method
+#     def get_username(self):
+#         return self.email
+
+# #Here is list of all default fields of AbstractUser
+# #U can choose one u need in ur form class
+# '''
+# username: A unique identifier for the user. This is typically used for authentication purposes.
+# password: The hashed password for the user account.
+# email: An email address associated with the user account. This is often used for communication and as an alternative identifier.
+# first_name: The first name of the user.
+# last_name: The last name of the user.
+# is_active: A boolean field indicating whether the user account is active or not. Inactive accounts may be prevented from logging in.
+# is_staff: A boolean field indicating whether the user is a staff member. Staff members may have additional permissions or privileges.
+# is_superuser: A boolean field indicating whether the user has superuser/administrator privileges. Superusers have full access to the Django admin interface and can perform administrative tasks.
+# '''
+
+# #AbstractBaseUser
+# # provides minimal functionality, requiring you to define
+# # all the fields and methods required for user authentication and management.
+# #requires you to define authentication-related methods such as 
+
+# #BaseUserManager
+# #Is like ModelManager for AbstactBaseUsers there defined and overrided methods if needed
+# from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+# from django.db import models
+
+# class CustomUserManager(BaseUserManager):
+#     def create_user(self, email, password=None):
+#         if not email:
+#             raise ValueError('The Email field must be set')
+#         user = self.model(email=self.normalize_email(email))
+#         user.set_password(password)
+#         user.save(using=self._db)
+#         return user
+#     #Here we also can define method for creating admin user
+
+# class CustomUser(AbstractBaseUser):
+#     email = models.EmailField(unique=True)
+#     is_active = models.BooleanField(default=True)
+
+#     objects = CustomUserManager()
+#     #we also can use parametrs with these
+#     USERNAME_FIELD = 'email'
+
+#     def __str__(self):
+#         return self.email
+
+
+
+# #AUTH_USER_MODEL 
+# # settings.py
+
+# AUTH_USER_MODEL = 'myapp.CustomUser'
+# '''Replace 'myapp.CustomUser' with the path to your custom user model. 
+# This ensures that Django's authentication system uses your custom user model throughout the project.'''
