@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms import ContactForm,NewMessageForm
+from .forms import ContactForm,NewMessageForm,UserProfileForm
 
 
 def contact_view(request):
@@ -24,3 +24,16 @@ def new_message_view(request):
     else:
         form = NewMessageForm()
     return render(request, 'new_message.html', {'form': form})
+
+
+def user_profile_view(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Redirect to success page or do something else
+            return redirect('success_page')
+    else:
+        form = UserProfileForm()
+
+    return render(request, 'user_profile.html', {'form': form})

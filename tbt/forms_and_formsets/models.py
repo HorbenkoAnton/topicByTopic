@@ -14,3 +14,4 @@ class NewMessage(models.Model):
 class UserProfile(AbstractUser):
     age = models.IntegerField(blank=True, null=True)
     bio = models.TextField(blank=True)
+    #USERNAME_FIELD= 'email'
