@@ -28,3 +28,43 @@ class NewMessageForm(forms.ModelForm):
 # so why we need form.Form with more control over validation if we can't save data with it 
 
 #I  understand it's good for non-database tasks but i just can't imagine one
+
+# Form Types
+# (forms.Form, forms.ModelForm, UserCreationForm, 
+# UserChangeForm, AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm)
+
+
+# forms.Form:
+# A basic form class for custom forms.
+# Use when you need complete control over form fields and validation.
+
+# forms.ModelForm:
+# A form that is tied to a Django model.
+# Automatically generates form fields from model fields.
+# Use when you need a form to create or update a model instance.
+
+# UserCreationForm:
+# A form that provides fields for creating a new user, including password fields.
+# Automatically handles password hashing.
+# Extends forms.ModelForm.
+
+# UserChangeForm:
+# A form for updating user information.
+# Excludes password fields by default.
+# Extends forms.ModelForm.
+
+# AuthenticationForm:
+# A form for handling user authentication (login).
+# Includes fields for username and password.
+
+# PasswordChangeForm:
+# A form for allowing users to change their password.
+# Includes fields for old password, new password, and password confirmation.
+
+# PasswordResetForm:
+# A form for initiating a password reset.
+# Includes a field for entering an email address.
+
+# SetPasswordForm:
+# A form for setting a new password without entering the old password.
+# Used in password reset workflows.

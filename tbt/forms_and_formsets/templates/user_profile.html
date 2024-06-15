@@ -1,14 +1,16 @@
+<!-- user_profile_form.html -->
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Profile</title>
+    <title>User Profile Form</title>
 </head>
 <body>
-    <h1>User Profile</h1>
+    <h1>User Profile Form</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Save</button>
+        <button type="submit">Save User Profile</button>
     </form>
 </body>
 </html>
