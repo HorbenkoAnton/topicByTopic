@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Addresses</title>
+</head>
+<body>
+    <h1>Manage Addresses for {{ user.username }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <table>
+            {% for form in formset %}
+                {{ form.as_table }}
+            {% endfor %}
+        </table>
+        <button type="submit">Save Addresses</button>
+    </form>
+</body>
+</html>

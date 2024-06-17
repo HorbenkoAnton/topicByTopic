@@ -15,3 +15,13 @@ class UserProfile(AbstractUser):
     age = models.IntegerField(blank=True, null=True)
     bio = models.TextField(blank=True)
     #USERNAME_FIELD= 'email'
+
+class Address(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    street = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=10)
+
+    def __str__(self):
+        return f"{self.street}, {self.city}"
