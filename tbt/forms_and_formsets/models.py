@@ -25,3 +25,13 @@ class Address(models.Model):
 
     def __str__(self):
         return f"{self.street}, {self.city}"
+
+
+#Model for form to train image uploads
+class Image(models.Model):
+    description = models.CharField(max_length=255, blank=True)
+    image = models.ImageField(upload_to='images/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.description

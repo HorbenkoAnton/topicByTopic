@@ -3,8 +3,8 @@ from .models import NewMessage,UserProfile
 from django.core.exceptions import ValidationError
 import re
 from datetime import date
-from .models import Address
-from django.forms import modelformset_factory
+from .models import Address  ,Image
+#from django.forms import modelformset_factory
 
 
 class RegistrationForm(forms.Form):
@@ -102,6 +102,12 @@ class AddressForm(forms.ModelForm):
         model = Address
         fields = ['street', 'city', 'state', 'zip_code']
 
-AddressFormSet = modelformset_factory(Address, form=AddressForm, extra=3)
+#AddressFormSet = modelformset_factory(Address, form=AddressForm, extra=1)
 
 
+#Image training form
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['description','image']

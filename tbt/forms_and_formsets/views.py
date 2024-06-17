@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
-from .forms import ContactForm,NewMessageForm,UserProfileForm,RegistrationForm
-from .models import UserProfile, Address
-from .forms import AddressFormSet
+from .forms import ContactForm,NewMessageForm,UserProfileForm,RegistrationForm, AddressForm,ImageForm
+from .models import UserProfile, Address,Image
+from django.forms import modelformset_factory
+
 
 def contact_view(request):
     if request.method == 'POST':
@@ -51,18 +52,34 @@ def register(request):
     return render(request, 'register.html', {'form' : form})
 
 
+def manage_addresses(request):
+    # Formsets are better be declared at forms.py but let's try this one
+    AddressFormSet = modelformset_factory(Address, form=AddressForm, extra=1)
 
-def manage_addresses(request, user_id):
-    user = UserProfile.objects.get(pk=user_id)
     if request.method == 'POST':
-        formset = AddressFormSet(request.POST, queryset=Address.objects.filter(user=user))
+        formset = AddressFormSet(request.POST, queryset=Address.objects.filter(user=request.user))
         if formset.is_valid():
-            addresses = formset.save(commit=False)
-            for address in addresses:
-                address.user = user
-                address.save()
-            return redirect('success_page')  # Redirect to success page upon successful form submission
+            instances = formset.save(commit=False)
+            for instance in instances:
+                instance.user = request.user
+                instance.save()
+            return redirect('success_page')
     else:
-        formset = AddressFormSet(queryset=Address.objects.filter(user=user))
+        formset = AddressFormSet(queryset=Address.objects.filter(user=request.user))
+
+    return render(request, 'manage_addresses.html', {'formset': formset})
+
+def upload_image(request):
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)  # Pass request.FILES here for file handling
+        if form.is_valid():
+            form.save()
+            return redirect('images_list')
+    else:
+        form = ImageForm()
     
-    return render(request, 'manage_addresses.html', {'formset': formset, 'user': user})
+    return render(request, 'upload_image.html', {'form': form})
+
+def images_list(request):
+    images = Image.objects.all()
+    return render(request, 'images_list.html', {'images': images})

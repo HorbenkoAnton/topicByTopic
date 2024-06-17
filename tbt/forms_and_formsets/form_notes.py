@@ -68,3 +68,31 @@ class NewMessageForm(forms.ModelForm):
 # SetPasswordForm:
 # A form for setting a new password without entering the old password.
 # Used in password reset workflows.
+
+
+'''FORMSETS'''
+#helps to write multiple connected forms
+from .models import Address
+from .forms import AddressForm
+from django.forms import modelformset_factory
+AddressFormSet = modelformset_factory(Address, form=AddressForm, extra=1)
+
+#Here how u deal with it in view:
+# if request.method == 'POST':
+#         formset = AddressFormSet(request.POST, queryset=Address.objects.filter(user=user))
+#         if formset.is_valid():
+#             addresses = formset.save(commit=False)
+#             for address in addresses:
+#                 address.user = user
+#                 address.save()
+#             return redirect('success_page')  # Redirect to success page upon successful form submission
+#     else:
+#         formset = AddressFormSet(queryset=Address.objects.filter(user=user))
+
+#U need to get all forms ( addresses = formset.save(commit=False) )
+# and then loop throw them and .save() them individualy 
+
+#U can add custom validation on different lvls:
+#Field, Form and Formset lvls, by using "clean" methods.
+#on Field lvl we use new custom clean_method
+#on form and Formset lvl we overide existing one
