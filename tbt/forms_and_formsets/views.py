@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms import ContactForm,NewMessageForm,UserProfileForm,RegistrationForm, AddressForm,ImageForm
+from .forms import ContactForm,NewMessageForm,UserProfileForm,RegistrationForm, AddressForm,ImageForm,DocumentForm
 from .models import UserProfile, Address,Image
 from django.forms import modelformset_factory
 
@@ -83,3 +83,13 @@ def upload_image(request):
 def images_list(request):
     images = Image.objects.all()
     return render(request, 'images_list.html', {'images': images})
+
+def upload_file(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('success')
+    else:
+        form = DocumentForm()
+    return render(request , 'upload_file.html', {'form':form})

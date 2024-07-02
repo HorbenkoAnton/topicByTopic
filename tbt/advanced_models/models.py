@@ -121,6 +121,7 @@
 
 
 # #Aggregation and Annotation
+
 # #Aggregation math operation with fields
 # # Sum(): Computes the sum of the values.
 # # Avg(): Computes the average of the values.
@@ -164,7 +165,7 @@
 
 # #ORM I don't really know where to place this
 # #ORM is a technique ,I'd rather said that it's a way to write code
-# #That allows devs to map throw all objects in app and place em to database well orginised organized
+# #That allows devs to map throw all objects in app and place em to database well organized
 # #ORM is also strognly depends on OOP principles 
 
 # #abstact user
@@ -233,3 +234,61 @@
 # AUTH_USER_MODEL = 'myapp.CustomUser'
 # '''Replace 'myapp.CustomUser' with the path to your custom user model. 
 # This ensures that Django's authentication system uses your custom user model throughout the project.'''
+
+
+# #i was revising some info and I understood that i missed field relations
+# # so there is an quick example to see how it works
+# # there are 3 types of field relations: OneToOne, ForeignKey(one to many) , ManyToMany
+# from django.db import models
+# from django.contrib.auth.models import AbstractUser
+
+
+# #Here we create custom usermodel
+# class UserProfile(AbstractUser):
+#     age = models.IntegerField(blank=True, null=True)
+#     bio = models.TextField(blank=True)
+
+
+# #We create a model for a school
+# class School(models.Model):
+#     name = models.CharField(max_length=100)
+#     address = models.CharField(max_length=255)
+
+#     def __str__(self):
+#         return self.name
+
+# #We bind a object of user and school to principal 
+# #so in database every principal would have field with id of a school and a user
+# class Principal(models.Model):
+#     user = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
+#     school = models.OneToOneField(School, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return f'{self.user.get_full_name()} ({self.school.name})'
+# #here we bind teacher to a school so every school can have multiple teachers
+# # (one school many teacher)
+# class Teacher(models.Model):
+#     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+#     school = models.ForeignKey(School, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return f'{self.user.get_full_name()} ({self.school.name})'
+
+# #Here we bind course to a school so school could have many courses
+# class Course(models.Model):
+#     name = models.CharField(max_length=100)
+#     school = models.ForeignKey(School, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return self.name
+
+
+# #Here we bind a student to a many courses(many studets may have many courses)
+# #and also every school can have many students
+# class Student(models.Model):
+#     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+#     courses = models.ManyToManyField(Course)
+#     school = models.ForeignKey(School, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return self.user.get_full_name()

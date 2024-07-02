@@ -1,6 +1,7 @@
-Forms and Formsets,Authentication , Middleware,Signals,Internationalization and Localization,Testing Framework,File Uploads,Sessions,Throttling,Filtering,Pagination,Versioning,Parsers and Renderers
+Authentication , Middleware,Signals,Internationalization and Localization,
+Testing Framework,File Uploads,Sessions,Throttling,Filtering,Pagination,Versioning,Parsers and Renderers
 
-Forms: Dive deeper into Django forms, including custom validation, formsets, and handling file uploads.
+
 Class-Based Views (CBVs): Gain a better understanding of CBVs, their mixins, and how to customize them for different use cases.
 Authentication and Authorization: Learn about custom user models, permissions, and the Django authentication system in more detail.
 Testing: Write unit tests, integration tests, and use tools like pytest and coverage to ensure code quality.
@@ -8,11 +9,13 @@ Deployment: Understand how to deploy Django applications using services like Her
 
 done:
 ORM , Aggregation and Annotation,
+Advanced Models and Querysets: Learn about model inheritance, 
+custom model methods, and more complex queries using Q objects and F expressions.
+Forms: Dive deeper into Django forms, including custom validation, formsets, and handling file uploads.
+Forms and Formsets,
 
-Advanced Models and Querysets: Learn about model inheritance, custom model methods, and more complex queries using Q objects and F expressions.
 
-
-
+___________________________________________________________________________________________________________
 Forms
 Creating Forms
 

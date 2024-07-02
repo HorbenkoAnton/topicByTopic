@@ -3,7 +3,7 @@ from .models import NewMessage,UserProfile
 from django.core.exceptions import ValidationError
 import re
 from datetime import date
-from .models import Address  ,Image
+from .models import Address  ,Image , Document
 #from django.forms import modelformset_factory
 
 
@@ -111,3 +111,17 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ['description','image']
+
+
+
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ['description', 'file']
+    
+    def clean_file(self):
+        file = self.cleaned_data.get('file')
+        if not file.name.endswith('.pdf'):
+            raise ValidationError('Only PDF files are allowed.')
+        return file
