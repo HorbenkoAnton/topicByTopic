@@ -41,7 +41,8 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'advanced_models',
-    'forms_and_formsets'
+    'forms_and_formsets',
+    'auth_app',
 
 ]
 
@@ -89,7 +90,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-AUTH_USER_MODEL = 'forms_and_formsets.UserProfile'
+AUTH_USER_MODEL = 'auth_app.CustomUser'
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
